@@ -47,7 +47,7 @@ use mlx_ethernet::{
    work_queue::{WorkQueueEntrySend, WorkQueueEntryReceive, DoorbellRecord}
 };
 use kernel_config::memory::PAGE_SIZE;
-use nic_buffers::{TransmitBuffer, ReceiveBuffer, ReceivedFrame};
+use nic_buffers::{TransmitBuffer, ReceiveBuffer};
 
 /// Vendor ID for Mellanox
 pub const MLX_VEND:             u16 = 0x15B3;
