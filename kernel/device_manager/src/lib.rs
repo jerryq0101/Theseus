@@ -224,7 +224,7 @@ pub fn init(
        // so choose only to store one
 
        // Updated: mlx5_devs is a IrqSafeMutex<ConnectX5Nic> h
-       let mlx5_nics = mlx5::CONNECTX5_NIC.call_once(|| mlx5_devs);
+       let mlx5_nics = mlx5::CONNECTX5_NIC.call_once(|| (*mlx5_devs));
 
        // we only register one anyway
        net::register_device(mlx5_nics);
