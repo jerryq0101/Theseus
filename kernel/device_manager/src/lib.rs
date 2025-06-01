@@ -209,7 +209,7 @@ pub fn init(
    #[cfg(target_arch = "x86_64")] {
        // Here, CONNECTX5_NIC is already filled with value from init call, so just get the value
        // get_mlx5_nic returns a reference to type inside CONNECTX_NIC5, then is wrapped with an Option
-       let mlx5_nic = mlx5::get_mlx5_nic().expect("MLX5 NIC static variable is null even after initialization");
+       let mlx5_nic = mlx5::get_mlx5_nic().expect("MLX5 NIC static variable is null");
 
        // Register NIC
        // TODO: Implement NetworkDevice and Send
