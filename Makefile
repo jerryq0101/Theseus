@@ -1099,3 +1099,8 @@ test: $(iso)
 	EXIT_CODE=$$?; \
 	test $$EXIT_CODE -eq 17 && exit 0; \
 	exit 2
+
+# Disabling graphics ("gtk not supported")
+QEMU_FLAGS += -nographic
+# For vfio-pci passthrough (To use NIC from QEMU)
+QEMU_FLAGS += -device vfio-pci,romfile=,host=01:00.1

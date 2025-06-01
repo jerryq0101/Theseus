@@ -1,3 +1,4 @@
+# This is meant to be ran on Cloudlab MLX5 machines. not on aarch64.
 # Theseus OS
 
 [![Documentation](https://img.shields.io/badge/view-docs-blue)](https://theseus-os.github.io/Theseus/doc/___Theseus_Crates___/index.html)
