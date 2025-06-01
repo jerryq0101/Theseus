@@ -25,7 +25,6 @@ extern crate kernel_config;
 extern crate memory_structs;
 extern crate nic_buffers;
 extern crate mpmc;
-extern crate net;
 #[macro_use] extern crate lazy_static;
 
 
