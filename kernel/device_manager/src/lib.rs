@@ -185,12 +185,8 @@ pub fn init(
                const TX_DESCS: usize = 8192;
                const MAX_MTU:  u16 = 9000;
 
-
-               mlx5_devs = mlx5::ConnectX5Nic::init(dev, TX_DESCS, RX_DESCS, MAX_MTU)?;
-              
-               info!("we are getting here! line after mlx5_nic init");
-               // Put MLX5 here for later registration.
-               // Updated: Passing ownership to mlx5_devs
+               // CONNECTX5_NIC.call_once(|| IrqSafeMutex::new(mlx5_nic)); takes place in init already
+               mlx5::ConnectX5Nic::init(dev, TX_DESCS, RX_DESCS, MAX_MTU)?;
                continue;
            }
        }
@@ -211,22 +207,10 @@ pub fn init(
 
 
    // Register MLX5 NICs like ixgbe NICs (mlx5 was missing)
-   // Assumption: No NIC support on aarch64 as well for mlx5
-   // Looks like I can only register one MLX5 NIC for now - mlx5/lib.rs line 73
-
-
-   // Hypothesis:
    #[cfg(target_arch = "x86_64")] {
-       // TODO: Check this, thoguh I am pretty sure we aren't discovering more than one
-       // Note: there could be multiple mlx5's discovered and init'd
-       // but we only store one
-       // In this case: `mlx5_devs` is a vec and `mlx5::CONNECTX5_NIC is a singular
-       // so choose only to store one
-
-       // Updated: mlx5_devs is a IrqSafeMutex<ConnectX5Nic> h
-       let mlx5_nics = mlx5::CONNECTX5_NIC.call_once(|| (*mlx5_devs));
-
-       // we only register one anyway
+       // Here, CONNECTX5_NIC is already filled with value from init call
+       let mlx5_nics = mlx5::CONNECTX5_NIC;
+       // Register that NIC
        net::register_device(mlx5_nics);
    }
 
