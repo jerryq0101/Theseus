@@ -207,11 +207,13 @@ pub fn init(
 
    // Register MLX5 NICs like ixgbe NICs (mlx5 was missing)
    #[cfg(target_arch = "x86_64")] {
-       // Here, CONNECTX5_NIC is already filled with value from init call
+       // Here, CONNECTX5_NIC is already filled with value from init call, so just get the value
+       // get_mlx5_nic returns a reference to type inside CONNECTX_NIC5, then is wrapped with an Option
        let mlx5_nic = mlx5::get_mlx5_nic().expect("MLX5 NIC static variable is null even after initialization");
 
-       // Register that NIC
-       net::register_device(&mlx5_nic);
+       // Register NIC
+       // TODO: Implement NetworkDevice and Send
+       net::register_device(mlx5_nic);
    }
 
 
