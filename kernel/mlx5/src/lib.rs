@@ -122,28 +122,26 @@ pub struct ConnectX5Nic {
 }
 
 
-impl net::NetworkDevice for ConnectX5Nic {
-       fn send(&mut self, buf: TransmitBuffer) {
-               self.send_internal(buf);
-       }
+// impl net::NetworkDevice for ConnectX5Nic {
+//        fn send(&mut self, buf: TransmitBuffer) {
+//                self.send_internal(buf);
+//        }
 
+//        fn receive(&mut self) -> Option<ReceivedFrame> {
+//                 // Poll the receive queue for completed packets
+//                 if let Some(completed_buffer) = self.receive_queue.poll_completed_rx() {
+//                         // The poll_completed_rx() method should return a ReceiveBuffer
+//                         // Convert it to ReceivedFrame which is what the trait expects
+//                         Some(ReceivedFrame::from(completed_buffer))
+//                 } else {
+//                         None
+//                 }
+//        }
 
-       fn receive(&mut self) -> Option<ReceivedFrame> {
-                // Poll the receive queue for completed packets
-                if let Some(completed_buffer) = self.receive_queue.poll_completed_rx() {
-                        // The poll_completed_rx() method should return a ReceiveBuffer
-                        // Convert it to ReceivedFrame which is what the trait expects
-                        Some(ReceivedFrame::from(completed_buffer))
-                } else {
-                        None
-                }
-       }
-
-
-       fn mac_address(&self) -> [u8; 6] {
-               self.mac_addr
-       }
-}
+//        fn mac_address(&self) -> [u8; 6] {
+//                self.mac_addr
+//        }
+// }
 
 
 

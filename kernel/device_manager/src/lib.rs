@@ -106,7 +106,9 @@ pub fn init(
    // No NIC support on aarch64 at the moment
    #[cfg(target_arch = "x86_64")]
    let mut ixgbe_devs = Vec::new();
-   let mut mlx5_devs;
+
+        #[cfg(target_arch = "x86_64")]
+        let mut mlx5_devs = Vec::new();
 
 
    // Iterate over all PCI devices and initialize the drivers for the devices we support.
@@ -189,7 +191,7 @@ pub fn init(
                info!("we are getting here! line after mlx5_nic init");
                // Put MLX5 here for later registration.
                // Updated: Passing ownership to mlx5_devs
-               mlx5_devs = mlx5_nic;
+               mlx5_devs.push(mlx5_nic);
                continue;
            }
        }
@@ -222,10 +224,8 @@ pub fn init(
        // In this case: `mlx5_devs` is a vec and `mlx5::CONNECTX5_NIC is a singular
        // so choose only to store one
 
-
        // Updated: mlx5_devs is a IrqSafeMutex<ConnectX5Nic> h
-       let mlx5_nics = mlx5::CONNECTX5_NIC.call_once(|| mlx5_devs);
-
+       let mlx5_nics = mlx5::CONNECTX5_NIC.call_once(|| mlx5_devs.first());
 
        // we only register one anyway
        net::register_device(mlx5_nics);
